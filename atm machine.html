@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<head>
+
+    <title>ATM Machine</title>
+
+
+    <style>
+        body {
+            background-color: rgb(204, 231, 247);
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .atm-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: rgb(36, 7, 7);
+            font-family: cursive;
+        }
+
+        #balance-display {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px #3187ce1a;
+        }
+
+        .option-label {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            width: 150px;
+            text-align: center;
+        }
+
+        .option-label:hover {
+            background-color: #45a049;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .section {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .section input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .section button {
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .section button:hover {
+            background-color: #1976D2;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+
+
+
+
+</head>
+
+
+<body>
+    <div class="atm-container">
+        <h1>WELCOME TO THE ATM</h1>
+        <div id="balance-display">Current Balance: $10000</div>
+        <input type="radio" id="check-balance" name="option">
+        <input type="radio" id="deposit" name="option">
+        <input type="radio" id="withdraw" name="option">
+        <div class="options">
+            <label for="check-balance" class="option-label">Check Balance</label>
+            <label for="withdraw" class="option-label">Withdraw Money</label>
+            <label for="deposit" class="option-label">Deposit Money</label>
+        </div>
+        <div id="balance-section" class="section">
+            <p>Your current balance is $10000.</p>
+        </div>
+        <div id="deposit-section" class="section">
+            <input type="number" placeholder="Enter amount to deposit">
+            <button>Deposit</button>
+        </div>
+        <div id="withdraw-section" class="section">
+            <input type="number" placeholder="Enter amount to withdraw">
+            <button>Withdraw</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+
+
+
+
+    <script>
+
+        let balance = 10000;
+        const balanceDisplay = document.getElementById('balance-display');
+        const balanceSection = document.getElementById('balance-section');
+        const depositBtn = document.querySelector('#deposit-section button');
+        const withdrawBtn = document.querySelector('#withdraw-section button');
+        const message = document.getElementById('message');
+
+        function updateBalance() {
+            balanceDisplay.textContent = `Current Balance: $${balance}`;
+            balanceSection.innerHTML = `<p>Your current balance is $${balance}.</p>`;
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+        }
+
+        updateBalance();
+
+        document.getElementById('check-balance').addEventListener('change', () => {
+            hideAllSections();
+            document.getElementById('balance-section').style.display = 'block';
+            updateBalance();
+            message.textContent = '';
+        });
+
+        document.getElementById('deposit').addEventListener('change', () => {
+            hideAllSections();
+            document.getElementById('deposit-section').style.display = 'block';
+            message.textContent = '';
+        });
+
+        document.getElementById('withdraw').addEventListener('change', () => {
+            hideAllSections();
+            document.getElementById('withdraw-section').style.display = 'block';
+            message.textContent = '';
+        });
+
+        depositBtn.addEventListener('click', () => {
+            const amount = parseFloat(document.querySelector('#deposit-section input').value);
+            if (isNaN(amount) || amount <= 0) {
+                message.textContent = 'Please enter a valid amount.';
+                return;
+            }
+            balance += amount;
+            updateBalance();
+            message.textContent = `Deposited $${amount}. Updated Balance: $${balance}`;
+            document.querySelector('#deposit-section input').value = '';
+            hideAllSections();
+        });
+
+
+        withdrawBtn.addEventListener('click', () => {
+            const amount = parseFloat(document.querySelector('#withdraw-section input').value);
+            if (isNaN(amount) || amount <= 0) {
+                message.textContent = 'Please enter a valid amount.';
+                return;
+            }
+            if (amount > balance) {
+                message.textContent = 'Insufficient Balance.';
+                return;
+            }
+            balance -= amount;
+            updateBalance();
+            message.textContent = `Withdrew $${amount}. Updated Balance: $${balance}`;
+            document.querySelector('#withdraw-section input').value = '';
+            hideAllSections();
+        });
+    </script>
+</body>
+
+
+</html>
