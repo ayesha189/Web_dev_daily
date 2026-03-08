@@ -61,7 +61,7 @@ A beautifully designed skincare profile registration form with full validation.
 - Success message on valid submission
 - Reset button to clear all fields
 - Fully responsive for mobile screens
-
+- simple design as for a skincare contact us page 
 ---
 
 ### 5. Skincare Brand Front Page 🌿
