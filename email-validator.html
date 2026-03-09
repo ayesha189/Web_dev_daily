@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Email Validation Checker</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #1e1e2f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .container {
+            background: #2c2c40;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .valid {
+            color: lightgreen;
+        }
+
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Email Validator</h2>
+
+        <input type="text" id="email" placeholder="Enter your email">
+
+        <br>
+
+        <button onclick="checkEmail()">Validate</button>
+
+        <p id="message"></p>
+
+    </div>
+
+    <script>
+
+        function checkEmail() {
+
+            let email = document.getElementById("email").value;
+
+            let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+            let message = document.getElementById("message");
+
+            if (email.match(pattern)) {
+                message.textContent = "Valid Email Address";
+                message.className = "valid";
+            }
+            else {
+                message.textContent = "Invalid Email Address";
+                message.className = "invalid";
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
